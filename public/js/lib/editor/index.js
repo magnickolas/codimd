@@ -773,7 +773,7 @@ export default class Editor {
       readOnly: true,
       autoRefresh: true,
       otherCursors: true,
-      placeholder: "← Start by entering a title here\n===\nVisit /features if you don't know what to do.\nHappy hacking :)"
+      placeholder: ""
     })
 
     this.spellchecker = new CodeMirrorSpellChecker(CodeMirror, this.getExistingSpellcheckLang(), this.editor)
