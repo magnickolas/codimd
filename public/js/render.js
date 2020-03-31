@@ -1,7 +1,7 @@
 /* eslint-env browser, jquery */
 // allow some attributes
 
-var filterXSS = require('xss')
+var filterXSS = require('xss');
 
 var whiteListAttr = ['id', 'class', 'style']
 window.whiteListAttr = whiteListAttr
@@ -72,7 +72,25 @@ function preventXSS (html) {
 }
 window.preventXSS = preventXSS
 
+function postProcessMarkdown(markdown) {
+  let postProcessed = markdown.replace(/(^|[^\\])@(\w+)/g, function (match, prefix, name) {
+    let request = new XMLHttpRequest();
+    request.open("GET", `/i/${name}`, false);
+    request.send();
+    let json = JSON.parse(request.responseText)
+    let id = json['id']
+    if (!id) {
+      return match
+    } else {
+      return `${prefix}[${name}](/${id})`
+    }
+  })
+  
+  return postProcessed
+}
+
 module.exports = {
   preventXSS: preventXSS,
-  escapeAttrValue: filterXSS.escapeAttrValue
+  escapeAttrValue: filterXSS.escapeAttrValue,
+  postProcessMarkdown: postProcessMarkdown
 }

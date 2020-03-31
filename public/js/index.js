@@ -72,7 +72,7 @@ import {
   removeHistory
 } from './history'
 
-import { preventXSS } from './render'
+import { preventXSS, postProcessMarkdown } from './render'
 
 import Editor from './lib/editor'
 
@@ -2764,7 +2764,7 @@ var postUpdateEvent = null
 
 function updateViewInner () {
   if (appState.currentMode === modeType.edit || !isDirty) return
-  var value = editor.getValue()
+  var value = postProcessMarkdown(editor.getValue())
   var lastMeta = md.meta
   md.meta = {}
   delete md.metaError

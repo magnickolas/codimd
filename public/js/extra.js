@@ -120,7 +120,7 @@ function getTitle (view) {
 export function renderTitle (view) {
   let title = getTitle(view)
   if (!title) {
-    title = 'Loading...'
+    title = 'Untitled'
   }
   return title
 }
